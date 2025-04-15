@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chat</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <!-- 表示エリア -->
+    <div id="messages">ここにメッセージが表示されます</div>
+
+    <!-- 入力エリア -->
+    <form id="form" action="javascript:void(0);">
+        <input type="text" id="input" autocomplete="off" placeholder="Type your message here..." />
+        <button id="send">Send</button>
+    </form>   
+    
+</body>
+</html>
