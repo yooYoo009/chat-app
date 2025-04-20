@@ -1,7 +1,8 @@
 const socket = io('http://localhost:3000');
-const messages = document.getElementById('messages');
-const input = document.getElementById('input');
-const sendButton = document.getElementById('send');
+
+// ユーザー名を設定
+const username = prompt('Enter your username:'); // ユーザー名を入力
+socket.emit('setUsername', username);
 
 const form = document.getElementById('form');
 form.addEventListener('submit', (e) => {
@@ -14,17 +15,15 @@ form.addEventListener('submit', (e) => {
     }
 });
 
-
-
-socket.on('message', (msg) => {
-    console.log('Received message:', msg); // デバッグ用
+// メッセージを受信して表示
+socket.on('message', (data) => {
+    const { username, message } = data; // ユーザー名とメッセージを取得
     const messageElement = document.createElement('div');
-    messageElement.textContent = msg;
+    messageElement.innerHTML = `<strong>${username}:</strong> ${message}`; // ユーザー名とメッセージを表示
     const messages = document.getElementById('messages');
     messages.appendChild(messageElement);
     messages.scrollTop = messages.scrollHeight; // スクロールを最下部に
 });
-
 
 socket.on('connect', () => {
     console.log('Connected to server');

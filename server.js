@@ -19,9 +19,19 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
 
+  // ユーザー名を受け取る
+  socket.on('setUsername', (username) => {
+    socket.username = username; // ユーザー名をソケットに保存
+    console.log(`User ${socket.id} set their username to ${username}`);
+  });
+
+  // メッセージを受信して全クライアントに送信
   socket.on('message', (msg) => {
-    console.log('Message received:', msg);
-    io.emit('message', msg);
+    const messageData = {
+      username: socket.username || 'Anonymous', // ユーザー名が設定されていない場合は "Anonymous"
+      message: msg,
+    };
+    io.emit('message', messageData); // メッセージデータを送信
   });
 
   socket.on('disconnect', () => {
